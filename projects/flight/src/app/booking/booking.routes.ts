@@ -9,6 +9,8 @@ import { ticketFeature } from "./logic-flight/+state/reducer";
 import { resolveFlight } from "./logic-flight/data-access/flight.resolver";
 import { inject } from "@angular/core";
 import { isAllowed } from "../auth.provider";
+import { provideHttpClient, withInterceptors, withRequestsMadeViaParent } from "@angular/common/http";
+import { tap } from "rxjs";
 
 
 export const BOOKING_ROUTES: Routes = [
@@ -18,6 +20,14 @@ export const BOOKING_ROUTES: Routes = [
     providers: [
       provideState(ticketFeature),
       provideEffects([TicketEffects]),
+      provideHttpClient(
+        withInterceptors([
+          (req, next) => next(req).pipe(
+            tap(resp => console.log('Inline Booking Interceptor', resp))
+          )
+        ]),
+        withRequestsMadeViaParent()
+      )
     ],
     children: [
       {
