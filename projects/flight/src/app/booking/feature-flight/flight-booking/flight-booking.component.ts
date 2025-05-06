@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { Flight } from '../../api-boarding';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -15,11 +13,4 @@ import { Flight } from '../../api-boarding';
     </div>
   `
 })
-export class FlightBookingComponent {
-  private http = inject(HttpClient);
-
-  constructor() {
-    this.http.get<Flight>('https://demo.angulararchitects.io/api/flight?id=3')
-      .subscribe(console.log);
-  }
-}
+export class FlightBookingComponent {}

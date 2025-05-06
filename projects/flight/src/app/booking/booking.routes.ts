@@ -1,16 +1,14 @@
+import { inject } from "@angular/core";
 import { Router, Routes } from "@angular/router";
 import { provideEffects } from "@ngrx/effects";
 import { provideState } from "@ngrx/store";
+import { isAllowed } from "../auth.provider";
 import { DepatureComponent } from "../boarding/feature-departure";
 import { FlightBookingComponent, FlightEditComponent, FlightSearchComponent } from "./feature-flight";
 import { MyFlightsComponent } from "./feature-flight/my-flights/my-flights.component";
 import { TicketEffects } from "./logic-flight/+state/effects";
 import { ticketFeature } from "./logic-flight/+state/reducer";
 import { resolveFlight } from "./logic-flight/data-access/flight.resolver";
-import { inject } from "@angular/core";
-import { isAllowed } from "../auth.provider";
-import { provideHttpClient, withInterceptors, withRequestsMadeViaParent } from "@angular/common/http";
-import { tap } from "rxjs";
 
 
 export const BOOKING_ROUTES: Routes = [
@@ -19,15 +17,7 @@ export const BOOKING_ROUTES: Routes = [
     component: FlightBookingComponent,
     providers: [
       provideState(ticketFeature),
-      provideEffects([TicketEffects]),
-      provideHttpClient(
-        withInterceptors([
-          (req, next) => next(req).pipe(
-            tap(resp => console.log('Inline Booking Interceptor', resp))
-          )
-        ]),
-        withRequestsMadeViaParent()
-      )
+      provideEffects([TicketEffects])
     ],
     children: [
       {
