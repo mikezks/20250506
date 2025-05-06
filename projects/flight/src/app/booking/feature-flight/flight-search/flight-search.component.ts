@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
 import { Flight, FlightFilter } from '../../logic-flight';
 import { TicketsFacade } from './../../logic-flight/+state/facade';
+import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { FlightCardComponent } from '../../ui-flight/flight-card/flight-card.component';
+import { UiFlightModule } from '../../ui-flight/ui-flight.module';
 
 
 @Component({
   selector: 'app-flight-search',
-  standalone: false,
+  imports: [
+    NgIf, NgFor, JsonPipe, AsyncPipe,
+    FlightCardComponent,
+    UiFlightModule
+  ],
   templateUrl: './flight-search.component.html',
 })
 export class FlightSearchComponent {
