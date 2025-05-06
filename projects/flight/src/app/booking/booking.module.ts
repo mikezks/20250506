@@ -11,17 +11,15 @@ import { UiFlightModule } from './ui-flight/ui-flight.module';
 
 
 @NgModule({
-  declarations: [
-    FlightBookingComponent,
-    FlightEditComponent,
-  ],
-  imports: [
-    CommonModule,
-    BookingRoutingModule,
-    ReactiveFormsModule,
-    StoreModule.forFeature(ticketFeature),
-    EffectsModule.forFeature([TicketEffects]),
-    UiFlightModule
-  ]
+    imports: [
+        CommonModule,
+        BookingRoutingModule,
+        ReactiveFormsModule,
+        StoreModule.forFeature(ticketFeature),
+        EffectsModule.forFeature([TicketEffects]),
+        UiFlightModule,
+        FlightBookingComponent,
+        FlightEditComponent
+    ]
 })
 export class BookingModule { }
