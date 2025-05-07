@@ -20,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideRouterFeature(),
     provideStoreDevtools(),
     provideNavigationService(APP_NAVIGATION),
-    provideExperimentalZonelessChangeDetection()
+    // provideExperimentalZonelessChangeDetection()
   ]
 };
