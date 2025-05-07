@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, effect, inject, input, numberAttribute } from '@angular/core';
+import { Component, effect, inject, input, numberAttribute, untracked } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { validatePassengerStatus } from '../../util-validation';
 
@@ -26,9 +26,8 @@ export class PassengerEditComponent {
   });
 
   constructor() {
-    const idLoggerRef = effect(() => {
-      console.log(this.id());
-      idLoggerRef.destroy();
+    effect(() => {
+      untracked(() => console.log(this.id()));
     });
   }
 
