@@ -28,19 +28,21 @@
   </div>
 </div>
 
-<div class="row">
-  @for (flight of flights; track flight.id) {
-    <div class="col-xs-12 col-sm-6 col-md-4">
-      <app-flight-card
-        [item]="flight"
-        [(selected)]="basket[flight.id]"
-        (delayTrigger)="delay($event)"
-      />
-    </div>
-  }
-</div>
+@defer (on interaction(flightFilterBox); prefetch on timer(5000)) {
+  <div class="row">
+    @for (flight of flights; track flight.id) {
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <app-flight-card
+          [item]="flight"
+          [(selected)]="basket[flight.id]"
+          (delayTrigger)="delay($event)"
+        />
+      </div>
+    }
+  </div>
+}
 
-@defer (on interaction(flightFilterBox)) {
+@defer (on timer(5000)) {
   <div class="card">
     <div class="card-header">
       <h2 class="card-title">Basket</h2>
