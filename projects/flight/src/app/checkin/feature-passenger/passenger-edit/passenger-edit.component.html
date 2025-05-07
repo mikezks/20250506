@@ -48,6 +48,18 @@
         >
           Save
         </button>
+        <a
+          [routerLink]="['..', id() - 1]"
+          class="btn btn-default"
+        >
+          ID -1
+        </a>
+        <a
+          [routerLink]="['..', id() + 1]"
+          class="btn btn-default"
+        >
+          ID +1
+        </a>
       </div>
     </form>
   </div>
