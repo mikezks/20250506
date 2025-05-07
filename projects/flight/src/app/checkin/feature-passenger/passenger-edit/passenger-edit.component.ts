@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, effect, inject, input, numberAttribute } from '@angular/core';
+import { Component, computed, effect, inject, input, numberAttribute, ResourceStatus } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -22,11 +22,8 @@ export class PassengerEditComponent {
   private passengerService = inject(PassengerService);
 
   id = input.required({ transform: numberAttribute });
-  passenger = toSignal(
-    toObservable(this.id).pipe(
-      switchMap(id => this.passengerService.findById(id))
-    ), { initialValue: initialPassenger }
-  );
+  passengerResource = this.passengerService.findByIdAsResource(this.id);
+  passengerResourceState = computed(() => ResourceStatus[this.passengerResource.status()]);
 
   protected editForm = inject(NonNullableFormBuilder).group({
     id: [0],
@@ -39,12 +36,17 @@ export class PassengerEditComponent {
   });
 
   constructor() {
-    effect(() => this.editForm.patchValue(
-      this.passenger()
-    ));
+    effect(() => {
+      if (this.passengerResource.hasValue()) {
+        this.editForm.patchValue(
+          this.passengerResource.value()
+        );
+      }
+    });
   }
 
   protected save(): void {
     console.log(this.editForm.value);
+    this.passengerResource.set(this.editForm.getRawValue());
   }
 }

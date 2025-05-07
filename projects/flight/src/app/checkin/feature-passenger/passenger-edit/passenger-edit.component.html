@@ -40,6 +40,7 @@
         {{ editForm.controls.passengerStatus.errors?.['passengerStatus'].validStatus.join(', ') }}
       </div>
 
+      <p>Resource State: {{ passengerResourceState() }}</p>
       <div class="form-group">
         <button
           (click)="save()"
@@ -47,6 +48,12 @@
           class="btn btn-default"
         >
           Save
+        </button>
+        <button
+          (click)="passengerResource.reload()"
+          class="btn btn-default"
+        >
+          Reload
         </button>
         <a
           [routerLink]="['..', id() - 1]"
