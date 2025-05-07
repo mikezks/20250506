@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, input, numberAttribute } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { validatePassengerStatus } from '../../util-validation';
 
@@ -13,6 +13,8 @@ import { validatePassengerStatus } from '../../util-validation';
   templateUrl: './passenger-edit.component.html'
 })
 export class PassengerEditComponent {
+  id = input.required({ transform: numberAttribute });
+
   protected editForm = inject(NonNullableFormBuilder).group({
     id: [0],
     firstName: [''],
@@ -22,6 +24,13 @@ export class PassengerEditComponent {
       validatePassengerStatus(['A', 'B', 'C'])
     ]]
   });
+
+  constructor() {
+    const idLoggerRef = effect(() => {
+      console.log(this.id());
+      idLoggerRef.destroy();
+    });
+  }
 
   protected save(): void {
     console.log(this.editForm.value);
