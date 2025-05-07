@@ -37,35 +37,6 @@ export class FlightSearchComponent {
       const route = this.route();
       untracked(() => this.logRoute(route));
     });
-
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Barcelona' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Athens' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Madrid' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Oslo' }));
-    console.log(this.filter().from);
-
-    // Glitch-free behavior
-    const counter = signal(0);
-    const isEven = computed(() => counter() % 2 === 0);
-    effect(() => console.log({
-      counter: counter(),
-      isEven: isEven()
-    }));
-    console.log(counter(), isEven());
-    counter.update(curr => curr + 1);
-    console.log(counter(), isEven());
-    counter.update(curr => curr + 1);
-    console.log(counter(), isEven());
-    counter.update(curr => curr + 1);
-    console.log(counter(), isEven());
-    counter.update(curr => curr + 1);
-    console.log(counter(), isEven());
-    counter.update(curr => curr + 1);
-    console.log(counter(), isEven());
   }
 
   logRoute(route: string): void {
