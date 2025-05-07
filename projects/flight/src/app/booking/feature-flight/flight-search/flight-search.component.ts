@@ -31,12 +31,15 @@ export class FlightSearchComponent {
     5: true
   };
   protected flights = this.ticketsFacade.flights;
+  protected name = 'Mary';
 
   constructor() {
     effect(() => {
       const route = this.route();
       untracked(() => this.logRoute(route));
     });
+
+    setTimeout(() => this.name = 'Peter', 5_000);
   }
 
   logRoute(route: string): void {
