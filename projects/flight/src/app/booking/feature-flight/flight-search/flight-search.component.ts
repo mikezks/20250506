@@ -38,6 +38,8 @@ export class FlightSearchComponent {
       const route = this.route();
       untracked(() => this.logRoute(route));
     });
+
+    this.search(this.filter());
   }
 
   logRoute(route: string): void {
@@ -55,7 +57,7 @@ export class FlightSearchComponent {
   }
 
   protected delay(flight: Flight): void {
-    const oldFlight = flight;
+    const oldFlight = this.flights().find(item => item.id === flight.id) || flight;
     const oldDate = new Date(oldFlight.date);
 
     const newDate = new Date(oldDate.getTime() + 1000 * 60 * 5); // Add 5 min

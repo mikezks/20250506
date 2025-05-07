@@ -28,7 +28,7 @@
   </div>
 </div>
 
-@defer (on interaction(flightFilterBox); prefetch on timer(5000)) {
+@defer (hydrate on interaction) {
   <div class="row">
     @for (flight of flights; track flight.id) {
       <div class="col-xs-12 col-sm-6 col-md-4">
@@ -40,7 +40,10 @@
       </div>
     }
   </div>
+} @placeholder {
+  <p>Flight result will be shown in time.</p>
 }
+
 
 @defer (on timer(5000)) {
   <div class="card">
