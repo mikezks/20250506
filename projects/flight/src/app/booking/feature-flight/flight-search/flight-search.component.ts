@@ -1,5 +1,5 @@
-import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, computed, effect, inject, Injector, signal, untracked } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Flight, FlightFilter, injectTicketsFacade } from '../../logic-flight';
 import { FlightCardComponent, FlightFilterComponent } from '../../ui-flight';
@@ -18,42 +18,17 @@ import { FlightCardComponent, FlightFilterComponent } from '../../ui-flight';
 export class FlightSearchComponent {
   private ticketsFacade = injectTicketsFacade();
 
-  protected filter = signal({
-    from: 'London',
-    to: 'New York',
-    urgent: false
-  });
-  protected route = computed(
-    () => 'From ' + this.filter().from + ' to ' + this.filter().to + '.'
-  );
-  protected basket: Record<number, boolean> = {
-    3: true,
-    5: true
-  };
+  protected filter = this.ticketsFacade.filter;
+  protected basket = this.ticketsFacade.basket;
   protected flights = this.ticketsFacade.flights;
-  protected name = 'Mary';
+  protected route = this.ticketsFacade.route;
 
-  constructor() {
-    effect(() => {
-      const route = this.route();
-      untracked(() => this.logRoute(route));
-    });
-
-    setTimeout(() => this.name = 'Peter', 5_000);
-  }
-
-  logRoute(route: string): void {
-    console.log(this.route());
-  }
-  
   protected search(filter: FlightFilter): void {  
-    this.filter.set(filter);
-
-    if (!this.filter().from || !this.filter().to) {
+    if (!filter.from || !filter.to) {
       return;
     }
 
-    this.ticketsFacade.search(this.filter());
+    this.ticketsFacade.search(filter);
   }
 
   protected delay(flight: Flight): void {
@@ -72,5 +47,12 @@ export class FlightSearchComponent {
 
   protected reset(): void {
     this.ticketsFacade.reset();
+  }
+
+  protected updateBasket(
+    id: number,
+    selected: boolean
+  ): void {
+    this.ticketsFacade.updateBasket(id, selected);
   }
 }
