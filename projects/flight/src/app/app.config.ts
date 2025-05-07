@@ -27,11 +27,11 @@ export const appConfig: ApplicationConfig = {
       withEventReplay(),
       withIncrementalHydration()
     ),
-    provideAppInitializer((
+    /* provideAppInitializer((
       id = inject(PLATFORM_ID)
     ) => isPlatformServer(id)
       ? of(true)
       : of(true).pipe(delay(10_000))
-    )
+    ) */
   ]
 };
