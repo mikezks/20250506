@@ -39,13 +39,17 @@
   }
 </div>
 
-<div class="card">
-  <div class="card-header">
-    <h2 class="card-title">Basket</h2>
+@defer (on timer(5000)) {
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Basket</h2>
+    </div>
+  
+    <div class="card-body">
+      <pre>{{ basket | json }}</pre>
+    </div>
   </div>
-
-  <div class="card-body">
-    <pre>{{ basket | json }}</pre>
-  </div>
-</div>
+} @placeholder {
+  <p>Basket info will be shown in time.</p>
+}
 
